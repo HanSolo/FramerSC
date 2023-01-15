@@ -8,18 +8,62 @@
 
 /* Begin PBXBuildFile section */
 		4F0E115B296E99E600903367 /* FramerSCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E115A296E99E600903367 /* FramerSCApp.swift */; };
-		4F0E115D296E99E600903367 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E115C296E99E600903367 /* ContentView.swift */; };
 		4F0E115F296E99E700903367 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F0E115E296E99E700903367 /* Assets.xcassets */; };
 		4F0E1163296E99E700903367 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F0E1162296E99E700903367 /* Preview Assets.xcassets */; };
+		4F0E116B296E9AE000903367 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E116A296E9AE000903367 /* Constants.swift */; };
+		4F0E116D296E9AFD00903367 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E116C296E9AFD00903367 /* Helper.swift */; };
+		4F0E116F296E9B1400903367 /* GeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E116E296E9B1400903367 /* GeoLocation.swift */; };
+		4F0E1171296E9B2900903367 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E1170296E9B2900903367 /* Math.swift */; };
+		4F0E1173296E9B5A00903367 /* CardinalDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E1172296E9B5A00903367 /* CardinalDirection.swift */; };
+		4F0E1175296E9B7400903367 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E1174296E9B7400903367 /* Triangle.swift */; };
+		4F0E1177296E9B8700903367 /* Trapezoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E1176296E9B8700903367 /* Trapezoid.swift */; };
+		4F0E1179296E9BA300903367 /* IllegalArgumentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E1178296E9BA300903367 /* IllegalArgumentError.swift */; };
+		4F0E117B296E9BC100903367 /* FovData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E117A296E9BC100903367 /* FovData.swift */; };
+		4F0E117D296E9BD700903367 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E117C296E9BD700903367 /* Feature.swift */; };
+		4F0E117F296E9BEE00903367 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E117E296E9BEE00903367 /* Geometry.swift */; };
+		4F0E1181296E9C0200903367 /* Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E1180296E9C0200903367 /* Properties.swift */; };
+		4F0E1183296E9C1700903367 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E1182296E9C1700903367 /* Orientation.swift */; };
+		4F0E1185296E9C3300903367 /* SensorFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E1184296E9C3300903367 /* SensorFormat.swift */; };
+		4F0E118B296E9EAD00903367 /* Aperture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E118A296E9EAD00903367 /* Aperture.swift */; };
+		4F0E118D296E9FBD00903367 /* TeleConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0E118C296E9FBD00903367 /* TeleConverter.swift */; };
+		4F305235297287CF00ECC74B /* MKPolygon+contains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F305234297287CF00ECC74B /* MKPolygon+contains.swift */; };
+		4F30523E2972C03000ECC74B /* FovDataViewMacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F30523D2972C03000ECC74B /* FovDataViewMacOS.swift */; };
+		4F33E7392970733200F1082D /* AdvancedMap in Frameworks */ = {isa = PBXBuildFile; productRef = 4F33E7382970733200F1082D /* AdvancedMap */; };
+		4F5284A62971412E00D92966 /* MKPointAnnotation+equals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5284A52971412D00D92966 /* MKPointAnnotation+equals.swift */; };
+		4F57E5CF296EC361000E338D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57E5CE296EC361000E338D /* Model.swift */; };
+		4F79289F2970862500454FA8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F79289E2970862500454FA8 /* ContentView.swift */; };
+		4F8D98312973175100EF2701 /* FovDataViewIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D98302973175100EF2701 /* FovDataViewIOS.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4F0E1157296E99E600903367 /* FramerSC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FramerSC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F0E115A296E99E600903367 /* FramerSCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FramerSCApp.swift; sourceTree = "<group>"; };
-		4F0E115C296E99E600903367 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4F0E115E296E99E700903367 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F0E1160296E99E700903367 /* FramerSC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FramerSC.entitlements; sourceTree = "<group>"; };
 		4F0E1162296E99E700903367 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4F0E1169296E9A9400903367 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4F0E116A296E9AE000903367 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4F0E116C296E9AFD00903367 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		4F0E116E296E9B1400903367 /* GeoLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocation.swift; sourceTree = "<group>"; };
+		4F0E1170296E9B2900903367 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		4F0E1172296E9B5A00903367 /* CardinalDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardinalDirection.swift; sourceTree = "<group>"; };
+		4F0E1174296E9B7400903367 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
+		4F0E1176296E9B8700903367 /* Trapezoid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trapezoid.swift; sourceTree = "<group>"; };
+		4F0E1178296E9BA300903367 /* IllegalArgumentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IllegalArgumentError.swift; sourceTree = "<group>"; };
+		4F0E117A296E9BC100903367 /* FovData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FovData.swift; sourceTree = "<group>"; };
+		4F0E117C296E9BD700903367 /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
+		4F0E117E296E9BEE00903367 /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
+		4F0E1180296E9C0200903367 /* Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Properties.swift; sourceTree = "<group>"; };
+		4F0E1182296E9C1700903367 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
+		4F0E1184296E9C3300903367 /* SensorFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorFormat.swift; sourceTree = "<group>"; };
+		4F0E118A296E9EAD00903367 /* Aperture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aperture.swift; sourceTree = "<group>"; };
+		4F0E118C296E9FBD00903367 /* TeleConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeleConverter.swift; sourceTree = "<group>"; };
+		4F305234297287CF00ECC74B /* MKPolygon+contains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKPolygon+contains.swift"; sourceTree = "<group>"; };
+		4F30523D2972C03000ECC74B /* FovDataViewMacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FovDataViewMacOS.swift; sourceTree = "<group>"; };
+		4F5284A52971412D00D92966 /* MKPointAnnotation+equals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKPointAnnotation+equals.swift"; sourceTree = "<group>"; };
+		4F57E5CE296EC361000E338D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		4F79289E2970862500454FA8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4F8D98302973175100EF2701 /* FovDataViewIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FovDataViewIOS.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F33E7392970733200F1082D /* AdvancedMap in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,11 +97,24 @@
 		4F0E1159296E99E600903367 /* FramerSC */ = {
 			isa = PBXGroup;
 			children = (
-				4F0E115A296E99E600903367 /* FramerSCApp.swift */,
-				4F0E115C296E99E600903367 /* ContentView.swift */,
-				4F0E115E296E99E700903367 /* Assets.xcassets */,
-				4F0E1160296E99E700903367 /* FramerSC.entitlements */,
+				4F0E1186296E9C6500903367 /* extensions */,
 				4F0E1161296E99E700903367 /* Preview Content */,
+				4F0E1189296E9E6C00903367 /* errors */,
+				4F0E1187296E9E1400903367 /* data */,
+				4F0E1188296E9E4D00903367 /* tools */,
+				4F0E1160296E99E700903367 /* FramerSC.entitlements */,
+				4F0E1169296E9A9400903367 /* Info.plist */,
+				4F0E115E296E99E700903367 /* Assets.xcassets */,
+				4F0E115A296E99E600903367 /* FramerSCApp.swift */,
+				4F0E116E296E9B1400903367 /* GeoLocation.swift */,
+				4F0E1172296E9B5A00903367 /* CardinalDirection.swift */,
+				4F0E1174296E9B7400903367 /* Triangle.swift */,
+				4F0E1176296E9B8700903367 /* Trapezoid.swift */,
+				4F0E1182296E9C1700903367 /* Orientation.swift */,
+				4F57E5CE296EC361000E338D /* Model.swift */,
+				4F79289E2970862500454FA8 /* ContentView.swift */,
+				4F30523D2972C03000ECC74B /* FovDataViewMacOS.swift */,
+				4F8D98302973175100EF2701 /* FovDataViewIOS.swift */,
 			);
 			path = FramerSC;
 			sourceTree = "<group>";
@@ -67,6 +125,47 @@
 				4F0E1162296E99E700903367 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4F0E1186296E9C6500903367 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4F5284A52971412D00D92966 /* MKPointAnnotation+equals.swift */,
+				4F305234297287CF00ECC74B /* MKPolygon+contains.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		4F0E1187296E9E1400903367 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				4F0E117A296E9BC100903367 /* FovData.swift */,
+				4F0E117C296E9BD700903367 /* Feature.swift */,
+				4F0E117E296E9BEE00903367 /* Geometry.swift */,
+				4F0E1180296E9C0200903367 /* Properties.swift */,
+				4F0E118A296E9EAD00903367 /* Aperture.swift */,
+				4F0E118C296E9FBD00903367 /* TeleConverter.swift */,
+				4F0E1184296E9C3300903367 /* SensorFormat.swift */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		4F0E1188296E9E4D00903367 /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				4F0E116C296E9AFD00903367 /* Helper.swift */,
+				4F0E116A296E9AE000903367 /* Constants.swift */,
+				4F0E1170296E9B2900903367 /* Math.swift */,
+			);
+			path = tools;
+			sourceTree = "<group>";
+		};
+		4F0E1189296E9E6C00903367 /* errors */ = {
+			isa = PBXGroup;
+			children = (
+				4F0E1178296E9BA300903367 /* IllegalArgumentError.swift */,
+			);
+			path = errors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,6 +184,9 @@
 			dependencies = (
 			);
 			name = FramerSC;
+			packageProductDependencies = (
+				4F33E7382970733200F1082D /* AdvancedMap */,
+			);
 			productName = FramerSC;
 			productReference = 4F0E1157296E99E600903367 /* FramerSC.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +215,9 @@
 				Base,
 			);
 			mainGroup = 4F0E114E296E99E600903367;
+			packageReferences = (
+				4F33E7372970733200F1082D /* XCRemoteSwiftPackageReference "SwiftUIAdvancedMap" */,
+			);
 			productRefGroup = 4F0E1158296E99E600903367 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -139,8 +244,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F0E115D296E99E600903367 /* ContentView.swift in Sources */,
+				4F0E1185296E9C3300903367 /* SensorFormat.swift in Sources */,
+				4F0E117D296E9BD700903367 /* Feature.swift in Sources */,
+				4F0E1183296E9C1700903367 /* Orientation.swift in Sources */,
+				4F305235297287CF00ECC74B /* MKPolygon+contains.swift in Sources */,
+				4F0E118B296E9EAD00903367 /* Aperture.swift in Sources */,
 				4F0E115B296E99E600903367 /* FramerSCApp.swift in Sources */,
+				4F0E116F296E9B1400903367 /* GeoLocation.swift in Sources */,
+				4F5284A62971412E00D92966 /* MKPointAnnotation+equals.swift in Sources */,
+				4F0E117F296E9BEE00903367 /* Geometry.swift in Sources */,
+				4F8D98312973175100EF2701 /* FovDataViewIOS.swift in Sources */,
+				4F79289F2970862500454FA8 /* ContentView.swift in Sources */,
+				4F0E117B296E9BC100903367 /* FovData.swift in Sources */,
+				4F30523E2972C03000ECC74B /* FovDataViewMacOS.swift in Sources */,
+				4F0E1181296E9C0200903367 /* Properties.swift in Sources */,
+				4F0E116B296E9AE000903367 /* Constants.swift in Sources */,
+				4F0E1179296E9BA300903367 /* IllegalArgumentError.swift in Sources */,
+				4F0E116D296E9AFD00903367 /* Helper.swift in Sources */,
+				4F0E1173296E9B5A00903367 /* CardinalDirection.swift in Sources */,
+				4F0E1171296E9B2900903367 /* Math.swift in Sources */,
+				4F0E1175296E9B7400903367 /* Triangle.swift in Sources */,
+				4F57E5CF296EC361000E338D /* Model.swift in Sources */,
+				4F0E118D296E9FBD00903367 /* TeleConverter.swift in Sources */,
+				4F0E1177296E9B8700903367 /* Trapezoid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +395,9 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FramerSC/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FramerSC;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -277,8 +406,7 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -307,6 +435,9 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FramerSC/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FramerSC;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -315,8 +446,7 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -354,6 +484,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4F33E7372970733200F1082D /* XCRemoteSwiftPackageReference "SwiftUIAdvancedMap" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sena-mike/SwiftUIAdvancedMap";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4F33E7382970733200F1082D /* AdvancedMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F33E7372970733200F1082D /* XCRemoteSwiftPackageReference "SwiftUIAdvancedMap" */;
+			productName = AdvancedMap;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4F0E114F296E99E600903367 /* Project object */;
 }

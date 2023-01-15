@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "swiftuiadvancedmap",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sena-mike/SwiftUIAdvancedMap",
+      "state" : {
+        "revision" : "774bfb11a74f5d1af07ebe86fd68aef35028b6a8",
+        "version" : "0.0.4"
+      }
+    }
+  ],
+  "version" : 2
+}
