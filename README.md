@@ -22,3 +22,9 @@ You can also copy the current settings to the clipboard in json format. So you c
 and in case you would like to see it again you can copy the json text and paste it using the paste button.
 
 The reset button will clear the markers and overlays.
+
+MacOS version:
+![MacOS](https://i.ibb.co/R3bcKVw/Framer-SC-Mac-OS.png)
+
+iOS version:
+![iOS](https://i.ibb.co/PD8TTK5/Framer-SC-i-OS.png)
