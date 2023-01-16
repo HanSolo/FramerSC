@@ -35,9 +35,22 @@ struct ContentView: View {
     @State var showPopover         : Bool                = false
     @State var showDofTrapezoid    : Bool                = true {
         didSet {
-            // trigger overlay renderer
+            #if os(macOS)
+            self.dofTrapezoidFill   = showDofTrapezoid ? Constants.DOF_TRAPEZOID_FILL   : NSColor.clear
+            self.dofTrapezoidStroke = showDofTrapezoid ? Constants.DOF_TRAPEZOID_STROKE : NSColor.clear
+            #elseif os(iOS)
+            self.dofTrapezoidFill   = showDofTrapezoid ? Constants.DOF_TRAPEZOID_FILL   : UIColor.clear
+            self.dofTrapezoidStroke = showDofTrapezoid ? Constants.DOF_TRAPEZOID_STROKE : UIColor.clear
+            #endif
         }
     }
+    #if os(macOS)
+    @State var dofTrapezoidFill    : NSColor             = Constants.DOF_TRAPEZOID_FILL
+    @State var dofTrapezoidStroke  : NSColor             = Constants.DOF_TRAPEZOID_STROKE
+    #elseif os(iOS)
+    @State var dofTrapezoidFill    : UIColor             = Constants.DOF_TRAPEZOID_FILL
+    @State var dofTrapezoidStroke  : UIColor             = Constants.DOF_TRAPEZOID_STROKE
+    #endif
     
     
     #if os(iOS) || os(macOS)
@@ -497,9 +510,9 @@ struct ContentView: View {
                     renderer.lineWidth   = 1
                     renderer.fillColor   = Constants.FOV_TRIANGLE_FILL
                 } else {
-                    renderer.strokeColor = self.showDofTrapezoid ? Constants.DOF_TRAPEZOID_STROKE : .clear
+                    renderer.strokeColor = $dofTrapezoidStroke.wrappedValue
                     renderer.lineWidth   = 1
-                    renderer.fillColor   = self.showDofTrapezoid ? Constants.DOF_TRAPEZOID_FILL : .clear
+                    renderer.fillColor   = $dofTrapezoidFill.wrappedValue
                 }
             } else {
                 renderer = MKPolylineRenderer()
