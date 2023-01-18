@@ -181,6 +181,29 @@ public struct Helper {
         return components
     }
         
+    
+    public static func findNearby(searchText: String, region: MKCoordinateRegion, completion: @escaping ([MKMapItem]) ->()) {
+        var items         : [MKMapItem]           = [MKMapItem]()
+        let searchRequest : MKLocalSearch.Request = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = searchText
+        searchRequest.region               = region
+                
+        let search : MKLocalSearch = MKLocalSearch(request: searchRequest)
+        search.start { response, error in
+            guard let response = response else {
+                print("Error: \(error?.localizedDescription ?? "Unknown error").")
+                return
+            }
+            items.append(contentsOf: response.mapItems)
+            //for item in response.mapItems {
+            //    print("\(item.name)")
+            //    items.append(item)
+            //}
+            completion(items)
+        }
+    }
+    
+    
     // Field of view calculation call
     public static func calcFov(cameraLocation: GeoLocation, subjectLocation: GeoLocation, focalLength: Int, aperture: Double, sensorFormat: SensorFormat, orientation: Orientation) async -> FovData {
         return await calcFov(latitude1: cameraLocation.coordinate.latitude, longitude1: cameraLocation.coordinate.longitude, latitude2: subjectLocation.coordinate.latitude, longitude2: subjectLocation.coordinate.longitude, focalLength: focalLength, aperture: aperture, sensorFormat: sensorFormat, orientation: orientation)
