@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 
 
-public class GeoLocation : Identifiable {
+public class GeoLocation : Identifiable, Hashable, Equatable {
     public     let id        : UUID                   = UUID()
     @Published var key       : String                 = ""
     @Published var name      : String                 = ""
@@ -29,5 +29,13 @@ public class GeoLocation : Identifiable {
     public func set(latitude: Double, longitude: Double) -> Void {
         self.coordinate.latitude  = latitude
         self.coordinate.longitude = longitude
+    }
+    
+    public static func == (lhs: GeoLocation, rhs: GeoLocation) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

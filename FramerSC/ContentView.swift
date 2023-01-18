@@ -435,11 +435,7 @@ struct ContentView: View {
         self.fovData = fovData
         
         // Move map to new coordinate
-        var r  : MKMapRect  = self.mapRect!
-        let pt : MKMapPoint = MKMapPoint(camera.coordinate)
-        r.origin.x = pt.x - r.size.width * 0.5
-        r.origin.y = pt.y - r.size.height * 0.5
-        self.mapRect?.origin = r.origin
+        moveTo(coordinate: camera.coordinate)        
     }
     
     func updateOverlays() {
@@ -468,6 +464,13 @@ struct ContentView: View {
         }
     }
 
+    func moveTo(coordinate: CLLocationCoordinate2D) -> Void {
+        var r  : MKMapRect  = self.mapRect!
+        let pt : MKMapPoint = MKMapPoint(coordinate)
+        r.origin.x = pt.x - r.size.width * 0.5
+        r.origin.y = pt.y - r.size.height * 0.5
+        self.mapRect?.origin = r.origin
+    }
     
     func annotationViewFacotry() -> AnnotationViewFactory {
         .combine(

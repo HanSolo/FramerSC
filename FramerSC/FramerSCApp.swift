@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct FramerSCApp: App {
-    @ObservedObject var model = Model()
+    @ObservedObject var model : Model = Model()
     
     
     var body: some Scene {

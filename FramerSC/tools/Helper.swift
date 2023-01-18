@@ -195,10 +195,6 @@ public struct Helper {
                 return
             }
             items.append(contentsOf: response.mapItems)
-            //for item in response.mapItems {
-            //    print("\(item.name)")
-            //    items.append(item)
-            //}
             completion(items)
         }
     }
