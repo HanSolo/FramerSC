@@ -59,6 +59,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             #if os(macOS)
+            
             HStack {
                 Picker("Focal Length", selection: $focalLength) {
                     ForEach(self.model.focalLengths, id: \.self) {
@@ -161,7 +162,23 @@ struct ContentView: View {
                 }
             }
             .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+            ZStack(alignment: .top) {
+                map
+                    .ignoresSafeArea()
+                    .environment(\.colorScheme, .light)
+                    .onAppear {
+                        CLLocationManager().requestWhenInUseAuthorization()
+                        CLLocationManager().startUpdatingLocation()
+                    }
+                HStack(alignment: .top) {
+                    Spacer()
+                    FovDataViewMacOS(fovData: $fovData)
+                        .padding(EdgeInsets(top:0, leading:0, bottom: 0, trailing: 0))
+                }
+            }
+            
             #elseif os(iOS)
+            
             HStack(spacing: 30) {
                 VStack(spacing: 20) {
                     Menu {
@@ -281,41 +298,25 @@ struct ContentView: View {
                 .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
             }
             .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-            #endif
-            
-            HStack {
-                #if os(iOS)
-                ZStack(alignment: .bottom) {
-                    map
-                        .ignoresSafeArea()
-                        .environment(\.colorScheme, .light)
-                        .onAppear {
-                            CLLocationManager().requestWhenInUseAuthorization()
-                            CLLocationManager().startUpdatingLocation()
-                        }
-                    
-                    FovDataViewIOS(fovData: $fovData)
-                        .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 200)
-                        .padding(EdgeInsets(top:0, leading:0, bottom: 0, trailing: 0))
-                }
-                #elseif os(macOS)
-                ZStack(alignment: .top) {
-                    map
-                        .ignoresSafeArea()
-                        .environment(\.colorScheme, .light)
-                        .onAppear {
-                            CLLocationManager().requestWhenInUseAuthorization()
-                            CLLocationManager().startUpdatingLocation()
-                        }
-                    HStack(alignment: .top) {
-                        Spacer()
-                        FovDataViewMacOS(fovData: $fovData)
-                            .padding(EdgeInsets(top:0, leading:0, bottom: 0, trailing: 0))
+            ZStack(alignment: .bottom) {
+                map
+                    .ignoresSafeArea()
+                    .environment(\.colorScheme, .light)
+                    .onAppear {
+                        CLLocationManager().requestWhenInUseAuthorization()
+                        CLLocationManager().startUpdatingLocation()
                     }
-                }
-                #endif
+                
+                FovDataViewIOS(fovData: $fovData)
+                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 200)
+                    .padding(EdgeInsets(top:0, leading:0, bottom: 0, trailing: 0))
             }
+            
+            #endif
         }
+        #if os(iOS)
+        .ignoresSafeArea()
+        #endif
     }
 
     var map: some View {
