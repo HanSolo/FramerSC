@@ -94,7 +94,7 @@ struct FovDataViewMacOS: View {
                 GridRow(alignment: .firstTextBaseline) {
                     Text("Total depth")
                         .foregroundColor(.white)
-                    Text("\((fovData?.dof_total == 10000) ? "Infinite" : String(format: "%.0f", fovData?.dof_total ?? 0))")
+                    Text("\((fovData?.dof_total == 10000) ? "Infinite" : String(format: "%.2f", fovData?.dof_total ?? 0))")
                         .foregroundColor(.white)
                         .gridColumnAlignment(.trailing)
                     Text("m")
@@ -103,7 +103,7 @@ struct FovDataViewMacOS: View {
                 GridRow(alignment: .firstTextBaseline) {
                     Text("Focus from")
                         .foregroundColor(.white)
-                    Text("\(String(format: "%.0f", fovData?.dof_near_limit ?? 0))")
+                    Text("\(String(format: "%.2f", fovData?.dof_near_limit ?? 0))")
                         .foregroundColor(.white)
                         .gridColumnAlignment(.trailing)
                     Text("m")
@@ -112,7 +112,7 @@ struct FovDataViewMacOS: View {
                 GridRow(alignment: .firstTextBaseline) {
                     Text("Focus to")
                         .foregroundColor(.white)
-                    Text("\((fovData?.dof_far_limit == 10000) ? "Infinite" : String(format: "%.0f", fovData?.dof_far_limit ?? 0))")
+                    Text("\((fovData?.dof_far_limit == 10000) ? "Infinite" : String(format: "%.2f", fovData?.dof_far_limit ?? 0))")
                         .foregroundColor(.white)
                         .gridColumnAlignment(.trailing)
                     Text("m")

@@ -173,7 +173,6 @@ public struct Helper {
         
     }
 
-
     private static func getBaseUrlComponents() -> URLComponents {
         var components : URLComponents = URLComponents()
         components.scheme = Constants.PROTOCOL
@@ -326,5 +325,4 @@ public struct Helper {
         let teleconverters : [TeleConverter] = try! decoder.decode([TeleConverter].self, from: data)
         return teleconverters
     }
-    
 }

@@ -19,21 +19,20 @@ import AppKit
 
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
-    
-    @EnvironmentObject var model   : Model
-    @State var mapRect             : MKMapRect?          = nil
-    @State var region              : MKCoordinateRegion? = nil
-    @State var overlays            : [MKOverlay]         = [MKOverlay]()
-    @State var annotations         : [MKPointAnnotation] = [MKPointAnnotation]()
-    @State var distance            : Double?             = nil
-    @State var fovData             : FovData?            = nil { didSet { updateOverlays() } }
-    @State var focalLength         : Int                 = Constants.DEFAULT_FOCAL_LENGTH
-    @State var aperture            : Aperture            = Constants.DEFAULT_APERTURE
-    @State var sensorFormat        : SensorFormat        = Constants.DEFAULT_SENSOR_FORMAT
-    @State var orientation         : Orientation         = Constants.DEFAULT_ORIENTATION
-    @State var teleconverter       : TeleConverter       = Constants.DEFAULT_TELECONVERTER
-    @State var showPopover         : Bool                = false
-    @State var showDofTrapezoid    : Bool                = true {
+    @EnvironmentObject          var model              : Model
+    @State                      var mapRect            : MKMapRect?              = nil
+    @State                      var region             : MKCoordinateRegion?     = nil
+    @State                      var overlays           : [MKOverlay]             = [MKOverlay]()
+    @State                      var annotations        : [MKPointAnnotation]     = [MKPointAnnotation]()
+    @State                      var distance           : Double?                 = nil
+    @State                      var fovData            : FovData?                = nil { didSet { updateOverlays() } }
+    @State                      var focalLength        : Int                     = Constants.DEFAULT_FOCAL_LENGTH
+    @State                      var aperture           : Aperture                = Constants.DEFAULT_APERTURE
+    @State                      var sensorFormat       : SensorFormat            = Constants.DEFAULT_SENSOR_FORMAT
+    @State                      var orientation        : Orientation             = Constants.DEFAULT_ORIENTATION
+    @State                      var teleconverter      : TeleConverter           = Constants.DEFAULT_TELECONVERTER
+    @State                      var showPopover        : Bool                    = false
+    @State                      var showDofTrapezoid   : Bool                    = true {
         didSet {
             #if os(macOS)
             self.dofTrapezoidFill   = showDofTrapezoid ? Constants.DOF_TRAPEZOID_FILL   : NSColor.clear
@@ -45,18 +44,18 @@ struct ContentView: View {
         }
     }
     #if os(macOS)
-    @State var dofTrapezoidFill    : NSColor             = Constants.DOF_TRAPEZOID_FILL
-    @State var dofTrapezoidStroke  : NSColor             = Constants.DOF_TRAPEZOID_STROKE
+    @State                      var dofTrapezoidFill   : NSColor                 = Constants.DOF_TRAPEZOID_FILL
+    @State                      var dofTrapezoidStroke : NSColor                 = Constants.DOF_TRAPEZOID_STROKE
     #elseif os(iOS)
-    @State var dofTrapezoidFill    : UIColor             = Constants.DOF_TRAPEZOID_FILL
-    @State var dofTrapezoidStroke  : UIColor             = Constants.DOF_TRAPEZOID_STROKE
+    @State                      var dofTrapezoidFill   : UIColor                 = Constants.DOF_TRAPEZOID_FILL
+    @State                      var dofTrapezoidStroke : UIColor                 = Constants.DOF_TRAPEZOID_STROKE
     #endif
-    
-    
     #if os(iOS) || os(macOS)
-        @State var userTrackingMode: MKUserTrackingMode = .follow
+        @State                  var userTrackingMode   : MKUserTrackingMode      = .follow
     #endif
 
+    
+    
     var body: some View {
         VStack {
             #if os(macOS)
@@ -319,68 +318,50 @@ struct ContentView: View {
         }
     }
 
-    
     var map: some View {
-    #if os(iOS)
-    AdvancedMap(
-        mapRect               : $mapRect,
-        userTrackingMode      : $userTrackingMode,
-        showsUserLocation     : true,
-        isZoomEnabled         : true,
-        isScrollEnabled       : true,
-        isRotateEnabled       : true,
-        isPitchEnabled        : true,
-        showsCompass          : true,
-        showsScale            : true,
-        annotations           : annotations,
-        annotationViewFactory : annotationViewFacotry(),
-        overlays              : overlays,
-        overlayRendererFactory: overlayRendererFactory(),
-        tapOrClickHandler     : tapOrClickHandler,
-        annotationDragHandler : annotationDragHandler
-    )
-    #elseif os(macOS)
-    AdvancedMap(
-        configuration         : .standard(.default, .realistic, .includingAll, true),
-        //configuration         : .hybrid(.realistic, .includingAll, false),
-        //configuration         : .imagery(.realistic),
-        mapRect               : $mapRect,
-        userTrackingMode      : $userTrackingMode,
-        showsUserLocation     : true,
-        isZoomEnabled         : true,
-        isScrollEnabled       : true,
-        isRotateEnabled       : true,
-        isPitchEnabled        : true,
-        showsPitchControl     : true,
-        showsZoomControls     : true,
-        showsCompass          : true,
-        showsScale            : true,
-        annotations           : annotations,
-        annotationViewFactory : annotationViewFacotry(),
-        overlays              : overlays,
-        overlayRendererFactory: overlayRendererFactory(),
-        tapOrClickHandler     : tapOrClickHandler,
-        annotationDragHandler : annotationDragHandler
-    )
-    #elseif os(tvOS)
-    AdvancedMap(
-        mapRect               : $mapRect,
-        showsUserLocation     : true,
-        isZoomEnabled         : true,
-        isScrollEnabled       : true,
-        isRotateEnabled       : true,
-        isPitchEnabled        : true,
-        showsPitchControl     : true,
-        showsZoomControls     : true,
-        showsCompass          : true,
-        annotations           : annotations,
-        annotationViewFactory : annotationViewFacotry(),
-        overlays              : overlays,
-        overlayRendererFactory: overlayRendererFactory()
-    )
-    #endif
+        #if os(iOS)
+        AdvancedMap(
+            mapRect               : $mapRect,
+            userTrackingMode      : $userTrackingMode,
+            showsUserLocation     : true,
+            isZoomEnabled         : true,
+            isScrollEnabled       : true,
+            isRotateEnabled       : true,
+            isPitchEnabled        : true,
+            showsCompass          : true,
+            showsScale            : true,
+            annotations           : annotations,
+            annotationViewFactory : annotationViewFacotry(),
+            overlays              : overlays,
+            overlayRendererFactory: overlayRendererFactory(),
+            tapOrClickHandler     : tapOrClickHandler,
+            annotationDragHandler : annotationDragHandler
+        )
+        #elseif os(macOS)
+        AdvancedMap(
+            configuration         : .standard(.default, .realistic, .includingAll, true),
+            //configuration         : .hybrid(.realistic, .includingAll, false),
+            //configuration         : .imagery(.realistic),
+            mapRect               : $mapRect,
+            userTrackingMode      : $userTrackingMode,
+            showsUserLocation     : true,
+            isZoomEnabled         : true,
+            isScrollEnabled       : true,
+            isRotateEnabled       : true,
+            isPitchEnabled        : true,
+            showsPitchControl     : true,
+            showsZoomControls     : true,
+            showsCompass          : true,
+            showsScale            : true,
+            annotations           : annotations,
+            annotationViewFactory : annotationViewFacotry(),
+            overlays              : overlays,
+            overlayRendererFactory: overlayRendererFactory(),
+            tapOrClickHandler     : tapOrClickHandler,
+            annotationDragHandler : annotationDragHandler
+        )
+        #endif
     }
-    
     
     
     func updateFovData() {
@@ -548,21 +529,20 @@ struct ContentView: View {
             Task {
                 let camera  : MKPointAnnotation = self.annotations[0]
                 let subject : MKPointAnnotation = self.annotations[1]
-                self.fovData = await Helper.calcFov(latitude1: camera.coordinate.latitude, longitude1: camera.coordinate.longitude, latitude2: subject.coordinate.latitude, longitude2: subject.coordinate.longitude, focalLength: self.focalLength, aperture: self.aperture.aperture, sensorFormat: self.sensorFormat, orientation: self.orientation)
+                self.fovData = await Helper.calcFov(latitude1: camera.coordinate.latitude, longitude1: camera.coordinate.longitude,
+                                                    latitude2: subject.coordinate.latitude, longitude2: subject.coordinate.longitude,
+                                                    focalLength: self.focalLength, aperture: self.aperture.aperture,
+                                                    sensorFormat: self.sensorFormat, orientation: self.orientation)
             }
         } else {
             updateOverlays()
         }
     }
 
-    func annotationDragHandler(
-        annotation: MKAnnotation,
-        location  : CLLocationCoordinate2D,
-        oldState  : MKAnnotationView.DragState,
-        newState  : MKAnnotationView.DragState) {
-            guard let index = self.annotations.firstIndex(where: { pointAnnotation in
+    func annotationDragHandler(annotation: MKAnnotation, location: CLLocationCoordinate2D, oldState: MKAnnotationView.DragState, newState: MKAnnotationView.DragState) {
+        guard let index = self.annotations.firstIndex(where: { pointAnnotation in
             pointAnnotation === annotation
-        }) else { return }
+    }) else { return }
         self.annotations[index].coordinate = location
         if self.annotations.count == 2 {
             Task {
