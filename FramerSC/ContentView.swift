@@ -25,24 +25,15 @@ struct ContentView: View {
     @State                      var overlays           : [MKOverlay]             = [MKOverlay]()
     @State                      var annotations        : [MKPointAnnotation]     = [MKPointAnnotation]()
     @State                      var distance           : Double?                 = nil
-    @State                      var fovData            : FovData?                = nil { didSet { updateOverlays() } }
+    @State                      var fovData            : FovData?                = nil /*{ didSet {updateOverlays() } }*/
     @State                      var focalLength        : Int                     = Constants.DEFAULT_FOCAL_LENGTH
     @State                      var aperture           : Aperture                = Constants.DEFAULT_APERTURE
     @State                      var sensorFormat       : SensorFormat            = Constants.DEFAULT_SENSOR_FORMAT
     @State                      var orientation        : Orientation             = Constants.DEFAULT_ORIENTATION
     @State                      var teleconverter      : TeleConverter           = Constants.DEFAULT_TELECONVERTER
     @State                      var showPopover        : Bool                    = false
-    @State                      var showDofTrapezoid   : Bool                    = true {
-        didSet {
-            #if os(macOS)
-            self.dofTrapezoidFill   = showDofTrapezoid ? Constants.DOF_TRAPEZOID_FILL   : NSColor.clear
-            self.dofTrapezoidStroke = showDofTrapezoid ? Constants.DOF_TRAPEZOID_STROKE : NSColor.clear
-            #elseif os(iOS)
-            self.dofTrapezoidFill   = showDofTrapezoid ? Constants.DOF_TRAPEZOID_FILL   : UIColor.clear
-            self.dofTrapezoidStroke = showDofTrapezoid ? Constants.DOF_TRAPEZOID_STROKE : UIColor.clear
-            #endif
-        }
-    }
+    @State                      var dofRenderer        : MKPolygonRenderer?      = nil
+    @State                      var showDofTrapezoid   : Bool                    = true
     #if os(macOS)
     @State                      var dofTrapezoidFill   : NSColor                 = Constants.DOF_TRAPEZOID_FILL
     @State                      var dofTrapezoidStroke : NSColor                 = Constants.DOF_TRAPEZOID_STROKE
@@ -121,6 +112,16 @@ struct ContentView: View {
                 HStack(spacing: 10) {
                     /*
                     Toggle("DoF", isOn: $showDofTrapezoid)
+                        .onChange(of: showDofTrapezoid) { value in
+                            #if os(macOS)
+                            self.dofTrapezoidFill   = showDofTrapezoid ? Constants.DOF_TRAPEZOID_FILL   : NSColor.clear
+                            self.dofTrapezoidStroke = showDofTrapezoid ? Constants.DOF_TRAPEZOID_STROKE : NSColor.clear
+                            #elseif os(iOS)
+                            self.dofTrapezoidFill   = showDofTrapezoid ? Constants.DOF_TRAPEZOID_FILL   : UIColor.clear
+                            self.dofTrapezoidStroke = showDofTrapezoid ? Constants.DOF_TRAPEZOID_STROKE : UIColor.clear
+                            #endif
+                        }
+                        .foregroundColor(.white)
                         .help("Show/Hide depth of field trapezoiod")
                     */
                     Button(action: {
@@ -489,7 +490,6 @@ struct ContentView: View {
                 renderer.lineWidth   = 1
             } else if let polygon = overlay as? MKPolygon {
                 renderer = MKPolygonRenderer(polygon: polygon)
-                
                 if polygon.pointCount == 3 {                    
                     renderer.strokeColor = Constants.FOV_TRIANGLE_STROKE
                     renderer.lineWidth   = 1
@@ -500,7 +500,7 @@ struct ContentView: View {
                     renderer.fillColor   = $dofTrapezoidFill.wrappedValue
                 }
             } else {
-                renderer = MKPolylineRenderer()
+                renderer = MKOverlayPathRenderer()
             }
             return renderer
         }

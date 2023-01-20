@@ -149,6 +149,6 @@ struct FovDataViewIOS: View {
         }
         .padding()
         .background(.black.opacity(0.7))
-        .cornerRadius(10)
+        //.cornerRadius(10)
     }
 }
