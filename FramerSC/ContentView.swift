@@ -20,29 +20,23 @@ import AppKit
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject          var model              : Model
-    @State                      var mapRect            : MKMapRect?              = nil
-    @State                      var region             : MKCoordinateRegion?     = nil
-    @State                      var overlays           : [MKOverlay]             = [MKOverlay]()
-    @State                      var annotations        : [MKPointAnnotation]     = [MKPointAnnotation]()
-    @State                      var distance           : Double?                 = nil
-    @State                      var fovData            : FovData?                = nil /*{ didSet {updateOverlays() } }*/
-    @State                      var focalLength        : Int                     = Constants.DEFAULT_FOCAL_LENGTH
-    @State                      var aperture           : Aperture                = Constants.DEFAULT_APERTURE
-    @State                      var sensorFormat       : SensorFormat            = Constants.DEFAULT_SENSOR_FORMAT
-    @State                      var orientation        : Orientation             = Constants.DEFAULT_ORIENTATION
-    @State                      var teleconverter      : TeleConverter           = Constants.DEFAULT_TELECONVERTER
-    @State                      var showPopover        : Bool                    = false
-    @State                      var dofRenderer        : MKPolygonRenderer?      = nil
-    @State                      var showDofTrapezoid   : Bool                    = true
-    #if os(macOS)
-    @State                      var dofTrapezoidFill   : NSColor                 = Constants.DOF_TRAPEZOID_FILL
-    @State                      var dofTrapezoidStroke : NSColor                 = Constants.DOF_TRAPEZOID_STROKE
-    #elseif os(iOS)
-    @State                      var dofTrapezoidFill   : UIColor                 = Constants.DOF_TRAPEZOID_FILL
-    @State                      var dofTrapezoidStroke : UIColor                 = Constants.DOF_TRAPEZOID_STROKE
-    #endif
+    @State                      var fetchingData       : Bool                = false
+    @State                      var mapRect            : MKMapRect?          = nil
+    @State                      var region             : MKCoordinateRegion? = nil
+    @State                      var overlays           : [MKOverlay]         = [MKOverlay]()
+    @State                      var annotations        : [MKPointAnnotation] = [MKPointAnnotation]()
+    @State                      var distance           : Double?             = nil
+    @State                      var fovData            : FovData?            = nil { didSet {updateOverlays() } }
+    @State                      var focalLength        : Int                 = Constants.DEFAULT_FOCAL_LENGTH
+    @State                      var aperture           : Aperture            = Constants.DEFAULT_APERTURE
+    @State                      var sensorFormat       : SensorFormat        = Constants.DEFAULT_SENSOR_FORMAT
+    @State                      var orientation        : Orientation         = Constants.DEFAULT_ORIENTATION
+    @State                      var teleconverter      : TeleConverter       = Constants.DEFAULT_TELECONVERTER
+    @State                      var showPopover        : Bool                = false
+    @State                      var dofRenderer        : MKPolygonRenderer?  = nil
+    @State                      var showDofTrapezoid   : Bool                = true
     #if os(iOS) || os(macOS)
-        @State                  var userTrackingMode   : MKUserTrackingMode      = .follow
+        @State                  var userTrackingMode   : MKUserTrackingMode  = .follow
     #endif
 
     
@@ -110,20 +104,15 @@ struct ContentView: View {
                 Spacer()
                                 
                 HStack(spacing: 10) {
-                    /*
+                    
                     Toggle("DoF", isOn: $showDofTrapezoid)
                         .onChange(of: showDofTrapezoid) { value in
-                            #if os(macOS)
-                            self.dofTrapezoidFill   = showDofTrapezoid ? Constants.DOF_TRAPEZOID_FILL   : NSColor.clear
-                            self.dofTrapezoidStroke = showDofTrapezoid ? Constants.DOF_TRAPEZOID_STROKE : NSColor.clear
-                            #elseif os(iOS)
-                            self.dofTrapezoidFill   = showDofTrapezoid ? Constants.DOF_TRAPEZOID_FILL   : UIColor.clear
-                            self.dofTrapezoidStroke = showDofTrapezoid ? Constants.DOF_TRAPEZOID_STROKE : UIColor.clear
-                            #endif
+                            updateOverlays()
                         }
                         .foregroundColor(.white)
                         .help("Show/Hide depth of field trapezoiod")
-                    */
+                        .frame(minWidth: 50)
+                    
                     Button(action: {
                         let encoder : JSONEncoder = JSONEncoder()
                         encoder.outputFormatting = .prettyPrinted
@@ -176,7 +165,14 @@ struct ContentView: View {
                     FovDataViewMacOS(fovData: $fovData)
                         .padding(EdgeInsets(top:0, leading:0, bottom: 0, trailing: 0))
                 }
+                if fetchingData {
+                    Text(Constants.FETCHING_DATA_TEXT)
+                        .foregroundColor(.white.opacity(0.5))
+                        .font(.system(size: 36))
+                        .frame(minWidth: 400, maxWidth: .infinity, minHeight: 400, maxHeight: .infinity)
+                }
             }
+            .frame(minWidth: 600, minHeight: 500)
             
             #elseif os(iOS)
             
@@ -258,47 +254,55 @@ struct ContentView: View {
                     }.onChange(of: teleconverter) { newValue in
                         updateFovData()
                     }
-                }
-                //Spacer()
-                HStack(spacing: 15) {
-                    Button(action: {
-                        let encoder : JSONEncoder = JSONEncoder()
-                        encoder.outputFormatting = .prettyPrinted
-                        do {
-                            let data : Data   = try encoder.encode(self.fovData)
-                            let json : String = String(data: data, encoding: .utf8) ?? ""
-                            UIPasteboard.general.setValue(json, forPasteboardType: "public.plain-text")
-                        } catch {
-                            
+                    
+                    Toggle("DoF", isOn: $showDofTrapezoid)
+                        .onChange(of: showDofTrapezoid) { value in
+                            updateOverlays()
                         }
-                    }) {
-                        Image(systemName: "doc.on.doc")
-                    }
-                    .disabled(self.fovData == nil)
-                    .help("Copy to clipboard")
-                    
-                    Button(action: {
-                        let pasteBoard = UIPasteboard.general
-                        let json       = pasteBoard.string ?? ""
-                        setFovData(fovData: Helper.getFovData(json: json))
-                        updateOverlays()
-                    }) {
-                        Image(systemName: "doc.on.clipboard")
-                    }
-                    .help("Paste from clipboard")
-                    
-                    Button(action: {
-                        self.overlays.removeAll()
-                        self.annotations.removeAll()
-                        @State var userTrackingMode: MKUserTrackingMode = .follow
-                    }) {
-                        Image(systemName: "clear")
-                    }
-                    .help("Reset")
+                        .toggleStyle(.button)
+                        .frame(maxWidth: 50, maxHeight: 16)
+                        .font(.system(size: 10))
                 }
-                .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
+                
+                VStack(spacing: 20) {
+                    
+                    HStack(alignment: .center, spacing: 15) {
+                        Button(action: {
+                            let encoder : JSONEncoder = JSONEncoder()
+                            encoder.outputFormatting = .prettyPrinted
+                            do {
+                                let data : Data   = try encoder.encode(self.fovData)
+                                let json : String = String(data: data, encoding: .utf8) ?? ""
+                                UIPasteboard.general.setValue(json, forPasteboardType: "public.plain-text")
+                            } catch {
+                                
+                            }
+                        }) {
+                            Image(systemName: "doc.on.doc")
+                        }
+                        .disabled(self.fovData == nil)
+                        
+                        Button(action: {
+                            let pasteBoard = UIPasteboard.general
+                            let json       = pasteBoard.string ?? ""
+                            setFovData(fovData: Helper.getFovData(json: json))
+                            updateOverlays()
+                        }) {
+                            Image(systemName: "doc.on.clipboard")
+                        }
+                        
+                        Button(action: {
+                            self.overlays.removeAll()
+                            self.annotations.removeAll()
+                            @State var userTrackingMode: MKUserTrackingMode = .follow
+                        }) {
+                            Image(systemName: "clear")
+                        }
+                    }
+                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                }
             }
-            .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+            .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
             ZStack(alignment: .bottom) {
                 map
                     .ignoresSafeArea()
@@ -311,6 +315,13 @@ struct ContentView: View {
                 FovDataViewIOS(fovData: $fovData)
                     .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 200)
                     .padding(EdgeInsets(top:0, leading:0, bottom: 0, trailing: 0))
+                
+                if fetchingData {
+                    Text(Constants.FETCHING_DATA_TEXT)
+                        .foregroundColor(.white.opacity(0.5))
+                        .font(.system(size: 24))
+                        .frame(minWidth: 400, maxWidth: .infinity, minHeight: 400, maxHeight: .infinity)
+                }
             }
             
             #endif
@@ -453,7 +464,7 @@ struct ContentView: View {
                 if self.fovData != nil {
                     self.overlays.removeAll()
                     let fovTriangle  : MKPolygon = (self.fovData?.getFovTriangle().getPolygon())!
-                    let dofTrapezoid : MKPolygon = (self.fovData?.getDofTrapezoid().getPolygon())!
+                    let dofTrapezoid : MKPolygon = self.showDofTrapezoid ? (self.fovData?.getDofTrapezoid().getPolygon())! : MKPolygon()
                     self.overlays.append(distanceLine)
                     self.overlays.append(fovTriangle)
                     self.overlays.append(dofTrapezoid)
@@ -495,9 +506,9 @@ struct ContentView: View {
                     renderer.lineWidth   = 1
                     renderer.fillColor   = Constants.FOV_TRIANGLE_FILL
                 } else {
-                    renderer.strokeColor = $dofTrapezoidStroke.wrappedValue
+                    renderer.strokeColor = Constants.DOF_TRAPEZOID_STROKE
                     renderer.lineWidth   = 1
-                    renderer.fillColor   = $dofTrapezoidFill.wrappedValue
+                    renderer.fillColor   = Constants.DOF_TRAPEZOID_FILL
                 }
             } else {
                 renderer = MKOverlayPathRenderer()
@@ -531,12 +542,15 @@ struct ContentView: View {
         
         if self.annotations.count == 2 {
             Task {
+                self.fetchingData = true
                 let camera  : MKPointAnnotation = self.annotations[0]
                 let subject : MKPointAnnotation = self.annotations[1]
                 self.fovData = await Helper.calcFov(latitude1: camera.coordinate.latitude, longitude1: camera.coordinate.longitude,
                                                     latitude2: subject.coordinate.latitude, longitude2: subject.coordinate.longitude,
                                                     focalLength: self.focalLength, aperture: self.aperture.aperture,
                                                     sensorFormat: self.sensorFormat, orientation: self.orientation)
+                updateOverlays()
+                self.fetchingData = false
             }
         } else {
             updateOverlays()
@@ -550,10 +564,12 @@ struct ContentView: View {
         self.annotations[index].coordinate = location
         if self.annotations.count == 2 {
             Task {
+                self.fetchingData = true
                 let camera  : MKPointAnnotation = self.annotations[0]
                 let subject : MKPointAnnotation = self.annotations[1]
                 self.fovData = await Helper.calcFov(latitude1: camera.coordinate.latitude, longitude1: camera.coordinate.longitude, latitude2: subject.coordinate.latitude, longitude2: subject.coordinate.longitude, focalLength: self.focalLength, aperture: self.aperture.aperture, sensorFormat: self.sensorFormat, orientation: self.orientation)
                 updateOverlays()
+                self.fetchingData = false
             }
         } else {
             updateOverlays()

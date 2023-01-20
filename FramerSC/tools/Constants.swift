@@ -76,6 +76,8 @@ public struct Constants {
     public static let DOF_TRAPEZOID_STROKE    : UIColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.9)
 
     #endif
+    
+    public static let FETCHING_DATA_TEXT      : String = "Fetching data"
         
     // Minimum allowed focal length in [mm]
     public static let MIN_FOCAL_LENGTH        : Int    = 8;
@@ -109,7 +111,7 @@ public struct Constants {
     public static let CAMERA_HEIGHT           : Double = 1.6
 
     // iOS menu font size
-    public static let IOS_MENU_FONT_SIZE      : CGFloat = 14
+    public static let IOS_MENU_FONT_SIZE      : CGFloat = 13
     
     // iOS FovDataView font size
     public static let IOS_FOV_VIEW_FONT_SIZE  : CGFloat = 12
