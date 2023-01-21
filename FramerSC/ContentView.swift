@@ -34,7 +34,7 @@ struct ContentView: View {
     @State                      var teleconverter      : TeleConverter       = Constants.DEFAULT_TELECONVERTER
     @State                      var showPopover        : Bool                = false
     @State                      var dofRenderer        : MKPolygonRenderer?  = nil
-    @State                      var showDofTrapezoid   : Bool                = true
+    @State                      var showDofTrapezoid   : Bool                = false
     #if os(iOS) || os(macOS)
         @State                  var userTrackingMode   : MKUserTrackingMode  = .follow
     #endif
