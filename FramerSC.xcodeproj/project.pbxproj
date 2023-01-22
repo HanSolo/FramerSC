@@ -33,6 +33,7 @@
 		4F57E5CF296EC361000E338D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57E5CE296EC361000E338D /* Model.swift */; };
 		4F79289F2970862500454FA8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F79289E2970862500454FA8 /* ContentView.swift */; };
 		4F8D98312973175100EF2701 /* FovDataViewIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D98302973175100EF2701 /* FovDataViewIOS.swift */; };
+		4F9301CF297C55EE00C814A9 /* ISO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9301CE297C55EE00C814A9 /* ISO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		4F57E5CE296EC361000E338D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		4F79289E2970862500454FA8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4F8D98302973175100EF2701 /* FovDataViewIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FovDataViewIOS.swift; sourceTree = "<group>"; };
+		4F9301CE297C55EE00C814A9 /* ISO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				4F0E118A296E9EAD00903367 /* Aperture.swift */,
 				4F0E118C296E9FBD00903367 /* TeleConverter.swift */,
 				4F0E1184296E9C3300903367 /* SensorFormat.swift */,
+				4F9301CE297C55EE00C814A9 /* ISO.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 				4F0E118B296E9EAD00903367 /* Aperture.swift in Sources */,
 				4F0E115B296E99E600903367 /* FramerSCApp.swift in Sources */,
 				4F0E116F296E9B1400903367 /* GeoLocation.swift in Sources */,
+				4F9301CF297C55EE00C814A9 /* ISO.swift in Sources */,
 				4F5284A62971412E00D92966 /* MKPointAnnotation+equals.swift in Sources */,
 				4F0E117F296E9BEE00903367 /* Geometry.swift in Sources */,
 				4F8D98312973175100EF2701 /* FovDataViewIOS.swift in Sources */,

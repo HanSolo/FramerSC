@@ -173,6 +173,12 @@ public struct Helper {
         
     }
 
+    // Calculates the exposure time in seconds for the given aperture and iso
+    public static func calcShutterSpeed(aperture: Aperture, iso: ISO) -> Double {
+        let shutterSpeed = (100 * (aperture.aperture * aperture.aperture)) / (iso.value * pow(2, -7)))
+        return shutterSpeed
+    }
+    
     private static func getBaseUrlComponents() -> URLComponents {
         var components : URLComponents = URLComponents()
         components.scheme = Constants.PROTOCOL
