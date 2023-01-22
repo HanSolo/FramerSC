@@ -20,11 +20,13 @@ public struct Constants {
     public static let CALC_FOV_ENDPOINT       : String = "/calc_fov"
     public static let CALC_TC_ENDPOINT        : String = "/calc_tc"
     public static let APERTURES_ENDPOINT      : String = "/apertures"
+    public static let ISOS_ENDPOINT           : String = "/isos"
     public static let SENSORS_ENDPOINT        : String = "/sensors"
     public static let TELECONVERTERS_ENDPOINT : String = "/teleconverters"
     public static let CALC_FOV_PATH           : String = "\(BASE_PATH)\(API_VERSION)\(CALC_FOV_ENDPOINT)"
     public static let CALC_TC_PATH            : String = "\(BASE_PATH)\(API_VERSION)\(CALC_TC_ENDPOINT)"
     public static let APERTURES_PATH          : String = "\(BASE_PATH)\(API_VERSION)\(APERTURES_ENDPOINT)"
+    public static let ISOS_PATH               : String = "\(BASE_PATH)\(API_VERSION)\(ISOS_ENDPOINT)"
     public static let SENSORS_PATH            : String = "\(BASE_PATH)\(API_VERSION)\(SENSORS_ENDPOINT)"
     public static let TELECONVERTERS_PATH     : String = "\(BASE_PATH)\(API_VERSION)\(TELECONVERTERS_ENDPOINT)"
     

@@ -156,6 +156,18 @@ public struct Helper {
         return CardinalDirection.NOT_FOUND
     }
     
+    public static func calcCoordinates(start: CLLocationCoordinate2D, distance: Double, bearing: Double) -> CLLocationCoordinate2D {
+        let lat1   : Double = Math.toRadians(deg: start.latitude)
+        let lon1   : Double = Math.toRadians(deg: start.longitude)
+        let radius : Double = distance / Constants.WGS84_a
+
+        let lat2   : Double = asin(sin(lat1) * cos(radius) + cos(lat1) * sin(radius) * cos(bearing))
+        var lon2   : Double = lon1 + atan2(sin(bearing) * sin(radius) * cos(lat1), cos(radius) - sin(lat1) * sin(lat2))
+        lon2 = (lon2 + 3 * .pi).truncatingRemainder(dividingBy: (2 * .pi)) - .pi
+
+        return CLLocationCoordinate2D(latitude: Math.toDegrees(rad: lat2), longitude: Math.toDegrees(rad: lon2))
+    }
+    
     public static func getDemoFovData() -> FovData {
         let decoder : JSONDecoder = JSONDecoder()
         let decodedData = try! decoder.decode(FovData.self, from: Constants.DEMO_DATA)
@@ -175,7 +187,7 @@ public struct Helper {
 
     // Calculates the exposure time in seconds for the given aperture and iso
     public static func calcShutterSpeed(aperture: Aperture, iso: ISO) -> Double {
-        let shutterSpeed = (100 * (aperture.aperture * aperture.aperture)) / (iso.value * pow(2, -7)))
+        let shutterSpeed = (100 * (aperture.aperture * aperture.aperture)) / (Double(iso.value) * pow(2, -7))
         return shutterSpeed
     }
     
@@ -303,6 +315,29 @@ public struct Helper {
         let decoder   : JSONDecoder = JSONDecoder()
         let apertures : [Aperture]  = try! decoder.decode([Aperture].self, from: data)
         return apertures
+    }
+    
+    // Isos call
+    public static func getIsos() async -> [ISO] {
+        var components : URLComponents = getBaseUrlComponents()
+        components.path = Constants.ISOS_PATH
+        
+        // Create the HTTP request
+        let url     : URL        = URL(string: components.string!)!
+        let request : URLRequest = URLRequest(url: url)
+        let result  : [ISO]      = try! await performCallToIsos(request)
+        return result
+    }
+    private static func performCallToIsos(_ request: URLRequest) async throws -> [ISO] {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200..<400).contains(httpResponse.statusCode) else {
+            throw URLError(.badServerResponse)
+        }
+        
+        let decoder : JSONDecoder = JSONDecoder()
+        let isos    : [ISO]       = try! decoder.decode([ISO].self, from: data)
+        return isos
     }
     
     // Sensors call

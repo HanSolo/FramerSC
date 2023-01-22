@@ -457,7 +457,7 @@ struct ContentView: View {
             let camera   : MKPointAnnotation = self.annotations[0]
             let subject  : MKPointAnnotation = self.annotations[1]
             self.distance = Helper.calcDistanceInMetersMorePrecise(location1: camera, location2: subject)
-
+            
             if Constants.DISTANCE_RANGE.contains(distance ?? 0) {
                 let distanceLine : MKPolyline = MKPolyline(coordinates: [camera.coordinate, subject.coordinate], count: 2)
                 distanceLine.title = "\(String(format: "%.2f", distance ?? 0))m"
