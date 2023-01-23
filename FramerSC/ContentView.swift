@@ -35,15 +35,23 @@ struct ContentView: View {
     @State                      var showPopover        : Bool                = false
     @State                      var dofRenderer        : MKPolygonRenderer?  = nil
     @State                      var showDofTrapezoid   : Bool                = false
+    @State                      var selectedMapStyle   : ConfigurationStyle  = .standard
     #if os(iOS) || os(macOS)
         @State                  var userTrackingMode   : MKUserTrackingMode  = .follow
     #endif
+    var configuration : Configuration {
+        switch selectedMapStyle {
+            case .standard  : return .standard(.default, .realistic, .includingAll, false)
+            case .hybrid    : return .hybrid(.realistic, .includingAll, false)
+            case .satellite : return .imagery(.realistic)
+        }
+    }
 
     
     
     var body: some View {
         VStack {
-            #if os(macOS)
+#if os(macOS)
             
             HStack {
                 Picker("Focal Length", selection: $focalLength) {
@@ -102,7 +110,7 @@ struct ContentView: View {
                 }
                 
                 Spacer()
-                                
+                
                 HStack(spacing: 10) {
                     
                     Toggle("DoF", isOn: $showDofTrapezoid)
@@ -148,7 +156,7 @@ struct ContentView: View {
                     }) {
                         Image(systemName: "clear")
                     }
-                    .help("Reset")                                        
+                    .help("Reset")
                 }
             }
             .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
@@ -173,167 +181,197 @@ struct ContentView: View {
                 }
             }
             .frame(minWidth: 600, minHeight: 500)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Picker(selection: $selectedMapStyle) {
+                        ForEach(ConfigurationStyle.allCases, id: \.self) { style in
+                            Text(style.rawValue.localizedCapitalized)
+                        }
+                    } label: {
+                        Text("Select a style")
+                    }.pickerStyle(.segmented)
+                }
+            }
             
             #elseif os(iOS)
             
-            HStack(spacing: 30) {
-                VStack(spacing: 20) {
-                    Menu {
-                        Picker(selection: $focalLength) {
-                            ForEach(self.model.focalLengths, id: \.self) { value in
-                                Text("\(value.description) mm")
-                                    .tag(value)
-                                    .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
-                            }
-                        } label: {}
-                    } label: {
-                        Text("\(self.focalLength.description) mm")
-                            .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
-                    }.onChange(of: focalLength) { newValue in
-                        updateFovData()
-                    }
-                    
-                    Menu {
-                        Picker(selection: $aperture) {
-                            ForEach(self.model.apertures, id: \.self) { value in
-                                Text(value.uiString)
-                                    .tag(value)
-                                    .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
-                            }
-                        } label: {}
-                    } label: {
-                        Text(self.aperture.uiString)
-                            .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
-                    }.onChange(of: aperture) { newValue in
-                        updateFovData()
-                    }
-                }
-                VStack(spacing: 20) {
-                    Menu {
-                        Picker(selection: $sensorFormat) {
-                            ForEach(self.model.sensors, id: \.self) { value in
-                                Text(value.uiString)
-                                    .tag(value)
-                                    .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
-                            }
-                        } label: {}
-                    } label: {
-                        Text(self.sensorFormat.uiString)
-                            .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
-                    }.onChange(of: sensorFormat) { newValue in
-                        updateFovData()
-                    }
-                    
-                    Menu {
-                        Picker(selection: $orientation) {
-                            ForEach(self.model.orientations, id: \.self) { value in
-                                Text(value.uiString)
-                                    .tag(value)
-                                    .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
-                            }
-                        } label: {}
-                    } label: {
-                        Text(self.orientation.uiString)
-                            .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
-                    }.onChange(of: orientation) { newValue in
-                        updateFovData()
-                    }
-                }
-                VStack(spacing: 20) {
-                    Menu {
-                        Picker(selection: $teleconverter) {
-                            ForEach(self.model.teleconverters, id: \.self) { value in
-                                Text(value.uiString)
-                                    .tag(value)
-                                    .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
-                            }
-                        } label: {}
-                    } label: {
-                        Text(self.teleconverter.uiString)
-                            .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
-                    }.onChange(of: teleconverter) { newValue in
-                        updateFovData()
-                    }
-                    
-                    Toggle("DoF", isOn: $showDofTrapezoid)
-                        .onChange(of: showDofTrapezoid) { value in
-                            updateOverlays()
-                        }
-                        .toggleStyle(.button)
-                        .frame(maxWidth: 50, maxHeight: 16)
-                        .font(.system(size: 10))
-                }
-                
-                VStack(spacing: 20) {
-                    
-                    HStack(alignment: .center, spacing: 15) {
-                        Button(action: {
-                            let encoder : JSONEncoder = JSONEncoder()
-                            encoder.outputFormatting = .prettyPrinted
-                            do {
-                                let data : Data   = try encoder.encode(self.fovData)
-                                let json : String = String(data: data, encoding: .utf8) ?? ""
-                                UIPasteboard.general.setValue(json, forPasteboardType: "public.plain-text")
-                            } catch {
-                                
-                            }
-                        }) {
-                            Image(systemName: "doc.on.doc")
-                        }
-                        .disabled(self.fovData == nil)
-                        
-                        Button(action: {
-                            let pasteBoard = UIPasteboard.general
-                            let json       = pasteBoard.string ?? ""
-                            setFovData(fovData: Helper.getFovData(json: json))
-                            updateOverlays()
-                        }) {
-                            Image(systemName: "doc.on.clipboard")
+            NavigationStack {
+            
+                HStack(spacing: 30) {
+                    VStack(spacing: 20) {
+                        Menu {
+                            Picker(selection: $focalLength) {
+                                ForEach(self.model.focalLengths, id: \.self) { value in
+                                    Text("\(value.description) mm")
+                                        .tag(value)
+                                        .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
+                                }
+                            } label: {}
+                        } label: {
+                            Text("\(self.focalLength.description) mm")
+                                .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
+                        }.onChange(of: focalLength) { newValue in
+                            updateFovData()
                         }
                         
-                        Button(action: {
-                            self.overlays.removeAll()
-                            self.annotations.removeAll()
-                            @State var userTrackingMode: MKUserTrackingMode = .follow
-                        }) {
-                            Image(systemName: "clear")
+                        Menu {
+                            Picker(selection: $aperture) {
+                                ForEach(self.model.apertures, id: \.self) { value in
+                                    Text(value.uiString)
+                                        .tag(value)
+                                        .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
+                                }
+                            } label: {}
+                        } label: {
+                            Text(self.aperture.uiString)
+                                .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
+                        }.onChange(of: aperture) { newValue in
+                            updateFovData()
                         }
                     }
-                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
-                }
-            }
-            .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
-            ZStack(alignment: .bottom) {
-                map
-                    .ignoresSafeArea()
-                    .environment(\.colorScheme, .light)
-                    .onAppear {
-                        CLLocationManager().requestWhenInUseAuthorization()
-                        CLLocationManager().startUpdatingLocation()
+                    VStack(spacing: 20) {
+                        Menu {
+                            Picker(selection: $sensorFormat) {
+                                ForEach(self.model.sensors, id: \.self) { value in
+                                    Text(value.uiString)
+                                        .tag(value)
+                                        .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
+                                }
+                            } label: {}
+                        } label: {
+                            Text(self.sensorFormat.uiString)
+                                .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
+                        }.onChange(of: sensorFormat) { newValue in
+                            updateFovData()
+                        }
+                        
+                        Menu {
+                            Picker(selection: $orientation) {
+                                ForEach(self.model.orientations, id: \.self) { value in
+                                    Text(value.uiString)
+                                        .tag(value)
+                                        .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
+                                }
+                            } label: {}
+                        } label: {
+                            Text(self.orientation.uiString)
+                                .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
+                        }.onChange(of: orientation) { newValue in
+                            updateFovData()
+                        }
                     }
-                
-                FovDataViewIOS(fovData: $fovData)
-                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 200)
-                    .padding(EdgeInsets(top:0, leading:0, bottom: 0, trailing: 0))
-                
-                if fetchingData {
-                    Text(Constants.FETCHING_DATA_TEXT)
-                        .foregroundColor(.white.opacity(0.5))
-                        .font(.system(size: 24))
-                        .frame(minWidth: 400, maxWidth: .infinity, minHeight: 400, maxHeight: .infinity)
+                    VStack(spacing: 20) {
+                        Menu {
+                            Picker(selection: $teleconverter) {
+                                ForEach(self.model.teleconverters, id: \.self) { value in
+                                    Text(value.uiString)
+                                        .tag(value)
+                                        .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
+                                }
+                            } label: {}
+                        } label: {
+                            Text(self.teleconverter.uiString)
+                                .font(.system(size: Constants.IOS_MENU_FONT_SIZE))
+                        }.onChange(of: teleconverter) { newValue in
+                            updateFovData()
+                        }
+                        
+                        Toggle("DoF", isOn: $showDofTrapezoid)
+                            .onChange(of: showDofTrapezoid) { value in
+                                updateOverlays()
+                            }
+                            .toggleStyle(.button)
+                            .frame(maxWidth: 50, maxHeight: 16)
+                            .font(.system(size: 10))
+                    }
+                    
+                    VStack(spacing: 20) {
+                        
+                        HStack(alignment: .center, spacing: 15) {
+                            Button(action: {
+                                let encoder : JSONEncoder = JSONEncoder()
+                                encoder.outputFormatting = .prettyPrinted
+                                do {
+                                    let data : Data   = try encoder.encode(self.fovData)
+                                    let json : String = String(data: data, encoding: .utf8) ?? ""
+                                    UIPasteboard.general.setValue(json, forPasteboardType: "public.plain-text")
+                                } catch {
+                                    
+                                }
+                            }) {
+                                Image(systemName: "doc.on.doc")
+                            }
+                            .disabled(self.fovData == nil)
+                            
+                            Button(action: {
+                                let pasteBoard = UIPasteboard.general
+                                let json       = pasteBoard.string ?? ""
+                                setFovData(fovData: Helper.getFovData(json: json))
+                                updateOverlays()
+                            }) {
+                                Image(systemName: "doc.on.clipboard")
+                            }
+                            
+                            Button(action: {
+                                self.overlays.removeAll()
+                                self.annotations.removeAll()
+                                @State var userTrackingMode: MKUserTrackingMode = .follow
+                            }) {
+                                Image(systemName: "clear")
+                            }
+                        }
+                        .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                    }
                 }
+                .padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
+                ZStack(alignment: .bottom) {
+                    map
+                        .ignoresSafeArea()
+                        .environment(\.colorScheme, .light)
+                        .onAppear {
+                            CLLocationManager().requestWhenInUseAuthorization()
+                            CLLocationManager().startUpdatingLocation()
+                        }
+                    
+                    FovDataViewIOS(fovData: $fovData)
+                        .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 200)
+                        .padding(EdgeInsets(top:0, leading:0, bottom: 0, trailing: 0))
+                    
+                    if fetchingData {
+                        Text(Constants.FETCHING_DATA_TEXT)
+                            .foregroundColor(.white.opacity(0.5))
+                            .font(.system(size: 24))
+                            .frame(minWidth: 400, maxWidth: .infinity, minHeight: 400, maxHeight: .infinity)
+                    }
+                }
+                .ignoresSafeArea()
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        Picker(selection: $selectedMapStyle) {
+                            ForEach(ConfigurationStyle.allCases, id: \.self) { style in
+                                Text(style.rawValue.localizedCapitalized)
+                            }
+                        } label: {
+                            Text("Select a style")
+                        }.pickerStyle(.segmented)
+                    }
+                }
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbarBackground(.visible, for: .navigationBar)
+            
             }
             
             #endif
         }
-        #if os(iOS)
-        .ignoresSafeArea()
-        #endif
+        //#if os(iOS)
+        //.ignoresSafeArea()
+        //#endif
     }
 
     var map: some View {
         #if os(iOS)
         AdvancedMap(
+            configuration         : configuration,
             mapRect               : $mapRect,
             userTrackingMode      : $userTrackingMode,
             showsUserLocation     : true,
@@ -352,9 +390,7 @@ struct ContentView: View {
         )
         #elseif os(macOS)
         AdvancedMap(
-            configuration         : .standard(.default, .realistic, .includingAll, true),
-            //configuration         : .hybrid(.realistic, .includingAll, false),
-            //configuration         : .imagery(.realistic),
+            configuration         : configuration,
             mapRect               : $mapRect,
             userTrackingMode      : $userTrackingMode,
             showsUserLocation     : true,

@@ -12,23 +12,27 @@ import SwiftUI
 public struct Constants {
         
     // Host and endpoints information
-    public static let PROTOCOL                : String = "http"
-    public static let HOST                    : String = "hansolo.eu"
-    public static let PORT                    : Int    = 8081
-    public static let BASE_PATH               : String = "/framer/"
-    public static let API_VERSION             : String = "v1.0"
-    public static let CALC_FOV_ENDPOINT       : String = "/calc_fov"
-    public static let CALC_TC_ENDPOINT        : String = "/calc_tc"
-    public static let APERTURES_ENDPOINT      : String = "/apertures"
-    public static let ISOS_ENDPOINT           : String = "/isos"
-    public static let SENSORS_ENDPOINT        : String = "/sensors"
-    public static let TELECONVERTERS_ENDPOINT : String = "/teleconverters"
-    public static let CALC_FOV_PATH           : String = "\(BASE_PATH)\(API_VERSION)\(CALC_FOV_ENDPOINT)"
-    public static let CALC_TC_PATH            : String = "\(BASE_PATH)\(API_VERSION)\(CALC_TC_ENDPOINT)"
-    public static let APERTURES_PATH          : String = "\(BASE_PATH)\(API_VERSION)\(APERTURES_ENDPOINT)"
-    public static let ISOS_PATH               : String = "\(BASE_PATH)\(API_VERSION)\(ISOS_ENDPOINT)"
-    public static let SENSORS_PATH            : String = "\(BASE_PATH)\(API_VERSION)\(SENSORS_ENDPOINT)"
-    public static let TELECONVERTERS_PATH     : String = "\(BASE_PATH)\(API_VERSION)\(TELECONVERTERS_ENDPOINT)"
+    public static let PROTOCOL                 : String = "http"
+    public static let HOST                     : String = "hansolo.eu"
+    public static let PORT                     : Int    = 8081
+    public static let BASE_PATH                : String = "/framer/"
+    public static let API_VERSION              : String = "v1.0"
+    public static let CALC_FOV_ENDPOINT        : String = "/calc_fov"
+    public static let CALC_TC_ENDPOINT         : String = "/calc_tc"
+    public static let APERTURES_ENDPOINT       : String = "/apertures"
+    public static let ISOS_ENDPOINT            : String = "/isos"
+    public static let SENSORS_ENDPOINT         : String = "/sensors"
+    public static let TELECONVERTERS_ENDPOINT  : String = "/teleconverters"
+    public static let SHUTTER_SPEEDS_ENDPOINT  : String = "/shutterspeeds"
+    public static let EXPOSURE_VALUES_ENDPOINT : String = "/exposurevalues"
+    public static let CALC_FOV_PATH            : String = "\(BASE_PATH)\(API_VERSION)\(CALC_FOV_ENDPOINT)"
+    public static let CALC_TC_PATH             : String = "\(BASE_PATH)\(API_VERSION)\(CALC_TC_ENDPOINT)"
+    public static let APERTURES_PATH           : String = "\(BASE_PATH)\(API_VERSION)\(APERTURES_ENDPOINT)"
+    public static let ISOS_PATH                : String = "\(BASE_PATH)\(API_VERSION)\(ISOS_ENDPOINT)"
+    public static let SENSORS_PATH             : String = "\(BASE_PATH)\(API_VERSION)\(SENSORS_ENDPOINT)"
+    public static let TELECONVERTERS_PATH      : String = "\(BASE_PATH)\(API_VERSION)\(TELECONVERTERS_ENDPOINT)"
+    public static let SHUTTER_SPEEDS_PATH      : String = "\(BASE_PATH)\(API_VERSION)\(SHUTTER_SPEEDS_ENDPOINT)"
+    public static let EXPOSURE_VALUES_PATH     : String = "\(BASE_PATH)\(API_VERSION)\(EXPOSURE_VALUES_ENDPOINT)"
     
     
     // Some standard strings for JSON output
@@ -134,7 +138,7 @@ public struct Constants {
     public static let DEFAULT_TELECONVERTER   : TeleConverter = TeleConverter(uiString: "None", apiString: "none", factor: 1.0)
     
     // Demo FovData
-    public static let DEMO_FOV_DATA           : FovData     = Helper.getDemoFovData()
+    public static let DEMO_FOV_DATA           : FovData = Helper.getDemoFovData()
     
     // Demo data
     public static let DEMO_DATA = """

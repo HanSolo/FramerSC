@@ -385,4 +385,50 @@ public struct Helper {
         let teleconverters : [TeleConverter] = try! decoder.decode([TeleConverter].self, from: data)
         return teleconverters
     }
+    
+    // ShutterSpeeds call
+    public static func getShutterSpeeds() async -> [ShutterSpeed] {
+        var components : URLComponents = getBaseUrlComponents()
+        components.path = Constants.SHUTTER_SPEEDS_PATH
+        
+        // Create the HTTP request
+        let url     : URL            = URL(string: components.string!)!
+        let request : URLRequest     = URLRequest(url: url)
+        let result  : [ShutterSpeed] = try! await performCallToShutterSpeeds(request)
+        return result
+    }
+    private static func performCallToShutterSpeeds(_ request: URLRequest) async throws -> [ShutterSpeed] {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200..<400).contains(httpResponse.statusCode) else {
+            throw URLError(.badServerResponse)
+        }
+        
+        let decoder       : JSONDecoder    = JSONDecoder()
+        let shutterSpeeds : [ShutterSpeed] = try! decoder.decode([ShutterSpeed].self, from: data)
+        return shutterSpeeds
+    }
+    
+    // Exposure values call
+    public static func getExposureValues() async -> [EV] {
+        var components : URLComponents = getBaseUrlComponents()
+        components.path = Constants.EXPOSURE_VALUES_PATH
+        
+        // Create the HTTP request
+        let url     : URL        = URL(string: components.string!)!
+        let request : URLRequest = URLRequest(url: url)
+        let result  : [EV]       = try! await performCallToExposureValues(request)
+        return result
+    }
+    private static func performCallToExposureValues(_ request: URLRequest) async throws -> [EV] {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200..<400).contains(httpResponse.statusCode) else {
+            throw URLError(.badServerResponse)
+        }
+        
+        let decoder        : JSONDecoder = JSONDecoder()
+        let exposureValues : [EV]        = try! decoder.decode([EV].self, from: data)
+        return exposureValues
+    }
 }

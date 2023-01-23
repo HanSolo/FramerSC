@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sena-mike/SwiftUIAdvancedMap",
       "state" : {
-        "revision" : "774bfb11a74f5d1af07ebe86fd68aef35028b6a8",
-        "version" : "0.0.4"
+        "revision" : "b27aef3c2ecb493ec2929d78f2e4fd670bfabd18",
+        "version" : "0.6.0"
       }
     }
   ],

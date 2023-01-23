@@ -34,6 +34,9 @@
 		4F79289F2970862500454FA8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F79289E2970862500454FA8 /* ContentView.swift */; };
 		4F8D98312973175100EF2701 /* FovDataViewIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D98302973175100EF2701 /* FovDataViewIOS.swift */; };
 		4F9301CF297C55EE00C814A9 /* ISO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9301CE297C55EE00C814A9 /* ISO.swift */; };
+		4FC3AD5A297E990A00C0DA15 /* ShutterSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3AD59297E990A00C0DA15 /* ShutterSpeed.swift */; };
+		4FC3AD5C297E994400C0DA15 /* EV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3AD5B297E994400C0DA15 /* EV.swift */; };
+		4FC3AD5E297EA4F400C0DA15 /* ConfigurationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3AD5D297EA4F400C0DA15 /* ConfigurationStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +69,9 @@
 		4F79289E2970862500454FA8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4F8D98302973175100EF2701 /* FovDataViewIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FovDataViewIOS.swift; sourceTree = "<group>"; };
 		4F9301CE297C55EE00C814A9 /* ISO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO.swift; sourceTree = "<group>"; };
+		4FC3AD59297E990A00C0DA15 /* ShutterSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShutterSpeed.swift; sourceTree = "<group>"; };
+		4FC3AD5B297E994400C0DA15 /* EV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EV.swift; sourceTree = "<group>"; };
+		4FC3AD5D297EA4F400C0DA15 /* ConfigurationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +123,7 @@
 				4F79289E2970862500454FA8 /* ContentView.swift */,
 				4F30523D2972C03000ECC74B /* FovDataViewMacOS.swift */,
 				4F8D98302973175100EF2701 /* FovDataViewIOS.swift */,
+				4FC3AD5D297EA4F400C0DA15 /* ConfigurationStyle.swift */,
 			);
 			path = FramerSC;
 			sourceTree = "<group>";
@@ -149,6 +156,8 @@
 				4F0E118C296E9FBD00903367 /* TeleConverter.swift */,
 				4F0E1184296E9C3300903367 /* SensorFormat.swift */,
 				4F9301CE297C55EE00C814A9 /* ISO.swift */,
+				4FC3AD59297E990A00C0DA15 /* ShutterSpeed.swift */,
+				4FC3AD5B297E994400C0DA15 /* EV.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -261,6 +270,7 @@
 				4F79289F2970862500454FA8 /* ContentView.swift in Sources */,
 				4F0E117B296E9BC100903367 /* FovData.swift in Sources */,
 				4F30523E2972C03000ECC74B /* FovDataViewMacOS.swift in Sources */,
+				4FC3AD5A297E990A00C0DA15 /* ShutterSpeed.swift in Sources */,
 				4F0E1181296E9C0200903367 /* Properties.swift in Sources */,
 				4F0E116B296E9AE000903367 /* Constants.swift in Sources */,
 				4F0E1179296E9BA300903367 /* IllegalArgumentError.swift in Sources */,
@@ -270,6 +280,8 @@
 				4F0E1175296E9B7400903367 /* Triangle.swift in Sources */,
 				4F57E5CF296EC361000E338D /* Model.swift in Sources */,
 				4F0E118D296E9FBD00903367 /* TeleConverter.swift in Sources */,
+				4FC3AD5E297EA4F400C0DA15 /* ConfigurationStyle.swift in Sources */,
+				4FC3AD5C297E994400C0DA15 /* EV.swift in Sources */,
 				4F0E1177296E9B8700903367 /* Trapezoid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -499,7 +511,7 @@
 			repositoryURL = "https://github.com/sena-mike/SwiftUIAdvancedMap";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.4;
+				minimumVersion = 0.0.6;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
